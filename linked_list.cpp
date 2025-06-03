@@ -13,7 +13,7 @@ public:
     }
 
     Node(int data){
-        this->data = data;
+        this->data = data;      
         this->next = NULL;
     }
 };
@@ -28,58 +28,28 @@ void printList(Node* &head){
 }
 
 
-void insertAtHead(Node* &head,Node* &tail, int data){
-    Node* newNode = new Node(data);
+Node* convertArrToLL(vector<int>& arr){
+    Node* head = new Node(arr[0]);
+    Node* mover = head;
 
-    newNode->next = head;
-
-    
-
-    if (head == NULL)
+    for (int i = 1; i < arr.size(); i++)
     {
-        tail = newNode;
+        Node* temp = new Node(arr[i]);
+        mover->next = temp;
+        mover = temp;
     }
     
-    head = newNode;
+    return head;
+
 }
 
-void insertAtTail(Node* &head, Node* &tail, int data){
-    Node* newNode = new Node(data);
-    if (head == NULL) {
-        head = newNode;
-        tail = newNode;
-    } else {
-        tail->next = newNode;
-        tail = newNode;
-    }
-}
 
 int main(){
 
-    // Node* first = new Node(10);
-    // Node* second = new Node(20);
+    vector<int> arr = {2, 5, 8, 10};
 
-    // first->next = second;
+    Node* head = convertArrToLL(arr);
 
-    // printList(first);
-
-    Node* head = new Node();
-    Node* tail = new Node();
-
-    insertAtHead(head,tail, 30);
-    insertAtHead(head,tail, 10);
-    insertAtHead(head,tail, 50);
-
-
-
-    insertAtTail(head,tail,20);
-    insertAtTail(head,tail,5);
-
-
-    printList(head);
-
-    cout << endl;
-
-    printList(tail);
+    printList(head);    
 
 }
