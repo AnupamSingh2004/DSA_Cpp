@@ -25,6 +25,8 @@ void printList(Node* &head){
         cout << temp->data << "->";
         temp = temp->next;
     }
+
+    cout << endl;
 }
 
 
@@ -87,7 +89,96 @@ Node* removeHead(Node* head){
     
 }
 
+Node* removeTail(Node* head){
+    if (head == NULL || head->next == NULL)
+    {
+        return NULL;
+    }
+    
+    Node* temp = head;
 
+    while (temp->next->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    delete temp->next;
+
+    temp->next = NULL;
+
+    return head;
+    
+}
+
+
+Node* removeK(Node* head, int k){
+    if (head == NULL)
+    {
+        return head;
+    }
+    if (k == 1)
+    {
+        Node* temp = head;
+        head = head->next;
+        free(temp);
+        return head;
+    }
+    int count = 0;
+    Node* temp = head;
+    Node* prev = NULL;
+
+    while (temp != NULL)
+    {
+        count++;
+        if (count == k)
+        {
+            prev->next = prev->next->next;
+            free(temp);
+            break;
+        }
+
+        prev = temp;
+        temp = temp->next;
+    }
+    
+    return head;
+    
+    
+}
+
+
+Node* removeElement(Node* head, int element){
+    if (head == NULL)
+    {
+        return head;
+    }
+    if (head->data == 1)
+    {
+        Node* temp = head;
+        head = head->next;
+        free(temp);
+        return head;
+    }
+    int count = 0;
+    Node* temp = head;
+    Node* prev = NULL;
+
+    while (temp != NULL)
+    {
+        count++;
+        if (temp->data == element)
+        {
+            prev->next = prev->next->next;
+            free(temp);
+            break;
+        }
+
+        prev = temp;
+        temp = temp->next;
+    }
+    
+    return head; 
+}
 int main(){
 
     vector<int> arr = {2, 5, 8, 10};
@@ -96,8 +187,20 @@ int main(){
 
     cout << lenghtOfLL(head) << endl;
 
+    head = removeHead(head);
+
     cout << (checkIfPresent(head,8) ? "Present" : "Not Present" )<< endl;
 
     printList(head);    
+
+    vector<int> arr2 = {2,5,7,7,4,25,56};
+
+    Node* head2 = convertArrToLL(arr2);
+
+    head2 = removeTail(head2);
+
+    head2 = removeK( head2, 2);
+
+    printList(head2);
 
 }
