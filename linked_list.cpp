@@ -16,6 +16,11 @@ public:
         this->data = data;      
         this->next = NULL;
     }
+
+    Node(int data,Node* next){
+        this->data = data;
+        this->next = next;
+    }
 };
 
 void printList(Node* &head){
@@ -152,7 +157,7 @@ Node* removeElement(Node* head, int element){
     {
         return head;
     }
-    if (head->data == 1)
+    if (head->data == element)
     {
         Node* temp = head;
         head = head->next;
@@ -179,6 +184,67 @@ Node* removeElement(Node* head, int element){
     
     return head; 
 }
+
+Node* insertHead(Node* head,int data){
+    Node* temp = new Node(data,head);
+    return temp;
+}
+
+Node* insertTail(Node* head, int data){
+    if(head == NULL) return new Node(data);
+
+    Node* temp = head;
+
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+
+    Node* newNode = new Node(data);
+
+    temp->next = newNode;
+
+    return head;
+
+}
+
+Node* insertAtK(Node* head,int element, int k){
+    if(head == NULL){
+        if (k == 1)
+        {
+            return new Node(element);
+        }else{
+            return NULL;
+        }
+    }
+
+    if (k == 1)
+    {
+        Node* temp = new Node(element);
+        temp->next = head;
+        return temp;
+    }
+
+    int count = 0;
+    Node* temp = head;
+
+    while (temp != NULL)
+    {
+        count++;
+        if (count == k - 1)
+        {
+            Node* x = new Node(element);
+            x->next = temp->next;
+            temp->next = x;
+            break;
+        }
+
+        temp = temp->next;
+    }
+
+    return head;
+}
+
+
 int main(){
 
     vector<int> arr = {2, 5, 8, 10};
@@ -200,6 +266,8 @@ int main(){
     head2 = removeTail(head2);
 
     head2 = removeK( head2, 2);
+
+   head2 = insertAtK(head2,100,1);
 
     printList(head2);
 
