@@ -108,6 +108,63 @@ Node* removeKthElement(Node* head,int k){
     return head;
 }
 
+Node* insertBeforeHead(Node* head,int value){
+    Node* newHead = new Node(value,head,NULL);
+    head->back = newHead;
+    return newHead;
+}
+
+Node* insertBeforeTail(Node* head,int value){
+    if(head->next == NULL){
+        return insertBeforeHead(head,value);
+    }
+
+    Node* temp = head;
+    while(temp->next!=NULL){
+        temp = temp->next;
+    }
+
+    Node* prev = temp->back;
+
+    Node* newNode = new Node(value,temp,prev);
+    prev->next = newNode;
+    temp->back = newNode;
+
+    return head;
+}
+
+
+Node* insertBeforeKthElement(Node* head,int k, int value){
+    if(k == 1){
+        return insertBeforeHead(head,value);
+    }
+
+    int count = 0;
+    Node* temp = head;
+    
+    while(temp != NULL){
+        count++;
+        if(count == k) break;
+        temp = temp->next;
+    }
+
+    Node* prev = temp->back;
+    Node* newNode = new Node(value,temp,prev);
+    
+    prev->next = newNode;
+    temp->back = newNode;
+
+    return head;
+}
+
+
+Node* insertBeforeNode(Node* node,int value){
+    Node* prev = node->back;
+    Node* newNode = new Node(value,node,prev);
+    prev->next = newNode;
+    node->back = newNode;
+}
+
 void printList(Node* head){
     while (head != NULL)
     {
@@ -124,6 +181,12 @@ int main(){
     Node* head = convertToDLL(arr);
 
     head = removeKthElement(head,3);
+
+    head = insertBeforeTail(head,100);
+
+    head = insertBeforeKthElement(head,3,1000);
+
+    insertBeforeNode(head->next->next,8423);
 
     printList(head);
     return 0;
