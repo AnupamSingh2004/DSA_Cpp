@@ -43,13 +43,44 @@ Node* convertToDLL(vector<int>& arr){
 
 
 Node* reverseDLL(Node* head){
-    
+    if(head == NULL || head->next == NULL){
+        return head;
+    }
+
+    Node* prev = NULL;
+    Node* current = head;
+
+    while(current != NULL){
+            prev = current->back;
+            current->back = current->next;
+            current->next = prev;
+            current = current->back;
+    }
+
+    return prev->back;
 };
+
+
+void printList(Node* head){
+    while (head != NULL)
+    {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    
+    cout << endl;
+}
 
 int main(){
 
     vector<int> arr = {2, 5, 8, 10};
 
     Node* head = convertToDLL(arr);
+    
+    printList(head);
+    
+    head = reverseDLL(head);
+
+    printList(head);
 
 }
